@@ -13,16 +13,28 @@
     <dl class="dl-horizontal">
         <input type="hidden" asp-for="IdAgenda" />
         <dt>
-            @Html.DisplayNameFor(model => model.DataHoraInicio)
+            @Html.DisplayNameFor(model => model.DataAgenda)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.DataHoraInicio)
+            @Html.DisplayFor(model => model.DataAgenda)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.DataHoraFim)
+            @Html.DisplayNameFor(model => model.HorarioEntrada)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.DataHoraFim)
+            @Html.DisplayFor(model => model.HorarioEntrada)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HorarioSaida)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HorarioSaida)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Medico)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Medico.Nome)
         </dd>
     </dl>
     

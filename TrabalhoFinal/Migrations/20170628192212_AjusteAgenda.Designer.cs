@@ -8,9 +8,10 @@ using TrabalhoFinal.Data;
 namespace TrabalhoFinal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170628192212_AjusteAgenda")]
+    partial class AjusteAgenda
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -199,8 +200,6 @@ namespace TrabalhoFinal.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DataHora");
-
-                    b.Property<TimeSpan>("HorarioConsulta");
 
                     b.Property<int>("IdMedico");
 

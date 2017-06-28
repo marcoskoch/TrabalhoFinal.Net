@@ -22,7 +22,8 @@ namespace TrabalhoFinal.Controllers
         // GET: Agenda
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Agendas.ToListAsync());
+            var applicationDbContext = _context.Agendas.Include(a => a.Medico);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Agenda/Details/5
@@ -34,6 +35,7 @@ namespace TrabalhoFinal.Controllers
             }
 
             var agenda = await _context.Agendas
+                .Include(a => a.Medico)
                 .SingleOrDefaultAsync(m => m.IdAgenda == id);
             if (agenda == null)
             {
@@ -46,6 +48,7 @@ namespace TrabalhoFinal.Controllers
         // GET: Agenda/Create
         public IActionResult Create()
         {
+            ViewData["IdMedico"] = new SelectList(_context.Medicos, "IdMedico", "Nome");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace TrabalhoFinal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdAgenda,DataHoraInicio,DataHoraFim")] Agenda agenda)
+        public async Task<IActionResult> Create([Bind("IdAgenda,DataAgenda,HorarioEntrada,HorarioSaida,IdMedico")] Agenda agenda)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace TrabalhoFinal.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+            ViewData["IdMedico"] = new SelectList(_context.Medicos, "IdMedico", "Nome", agenda.IdMedico);
             return View(agenda);
         }
 
@@ -78,6 +82,7 @@ namespace TrabalhoFinal.Controllers
             {
                 return NotFound();
             }
+            ViewData["IdMedico"] = new SelectList(_context.Medicos, "IdMedico", "Nome", agenda.IdMedico);
             return View(agenda);
         }
 
@@ -86,7 +91,7 @@ namespace TrabalhoFinal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdAgenda,DataHoraInicio,DataHoraFim")] Agenda agenda)
+        public async Task<IActionResult> Edit(int id, [Bind("IdAgenda,DataAgenda,HorarioEntrada,HorarioSaida,IdMedico")] Agenda agenda)
         {
             if (id != agenda.IdAgenda)
             {
@@ -113,6 +118,7 @@ namespace TrabalhoFinal.Controllers
                 }
                 return RedirectToAction("Index");
             }
+            ViewData["IdMedico"] = new SelectList(_context.Medicos, "IdMedico", "Nome", agenda.IdMedico);
             return View(agenda);
         }
 
@@ -125,6 +131,7 @@ namespace TrabalhoFinal.Controllers
             }
 
             var agenda = await _context.Agendas
+                .Include(a => a.Medico)
                 .SingleOrDefaultAsync(m => m.IdAgenda == id);
             if (agenda == null)
             {

@@ -19,12 +19,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Especialidade" class="col-md-2 control-label"></label>
+            <label asp-for="IdEspecialidade" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <select asp-for="IdEspecialidade" class="form-control" asp-items="ViewBag.IdEspecialidade">
-                    <option value="">-- Select Especialidade --</option>
-                </select>
-                <span asp-validation-for="IdEspecialidade" class="text-danger" />
+                <select asp-for="IdEspecialidade" class ="form-control" asp-items="ViewBag.IdEspecialidade"></select>
             </div>
         </div>
         <div class="form-group">

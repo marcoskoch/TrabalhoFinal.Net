@@ -204,14 +204,14 @@ namespace TrabalhoFinal.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     DataHoraFim = table.Column<DateTime>(nullable: false),
                     DataHoraInicio = table.Column<DateTime>(nullable: false),
-                    MedicoIdMedico = table.Column<int>(nullable: false)
+                    IdMedico = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Agendas", x => x.IdAgenda);
                     table.ForeignKey(
-                        name: "FK_Agendas_Medicos_MedicoIdMedico",
-                        column: x => x.MedicoIdMedico,
+                        name: "FK_Agendas_Medicos_IdMedico",
+                        column: x => x.IdMedico,
                         principalTable: "Medicos",
                         principalColumn: "IdMedico",
                         onDelete: ReferentialAction.Cascade);
@@ -224,24 +224,24 @@ namespace TrabalhoFinal.Migrations
                     IdConsulta = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     DataHora = table.Column<DateTime>(nullable: false),
-                    MedicoIdMedico = table.Column<int>(nullable: true),
-                    PacienteIdPaciente = table.Column<int>(nullable: true)
+                    IdMedico = table.Column<int>(nullable: false),
+                    IdPaciente = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Consultas", x => x.IdConsulta);
                     table.ForeignKey(
-                        name: "FK_Consultas_Medicos_MedicoIdMedico",
-                        column: x => x.MedicoIdMedico,
+                        name: "FK_Consultas_Medicos_IdMedico",
+                        column: x => x.IdMedico,
                         principalTable: "Medicos",
                         principalColumn: "IdMedico",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Consultas_Pacientes_PacienteIdPaciente",
-                        column: x => x.PacienteIdPaciente,
+                        name: "FK_Consultas_Pacientes_IdPaciente",
+                        column: x => x.IdPaciente,
                         principalTable: "Pacientes",
                         principalColumn: "IdPaciente",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -271,9 +271,9 @@ namespace TrabalhoFinal.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Agendas_MedicoIdMedico",
+                name: "IX_Agendas_IdMedico",
                 table: "Agendas",
-                column: "MedicoIdMedico");
+                column: "IdMedico");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -287,14 +287,14 @@ namespace TrabalhoFinal.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Consultas_MedicoIdMedico",
+                name: "IX_Consultas_IdMedico",
                 table: "Consultas",
-                column: "MedicoIdMedico");
+                column: "IdMedico");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Consultas_PacienteIdPaciente",
+                name: "IX_Consultas_IdPaciente",
                 table: "Consultas",
-                column: "PacienteIdPaciente");
+                column: "IdPaciente");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Medicos_IdEspecialidade",

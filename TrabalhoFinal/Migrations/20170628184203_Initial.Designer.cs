@@ -8,7 +8,7 @@ using TrabalhoFinal.Data;
 namespace TrabalhoFinal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170627204945_Initial")]
+    [Migration("20170628184203_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -133,11 +133,11 @@ namespace TrabalhoFinal.Migrations
 
                     b.Property<DateTime>("DataHoraInicio");
 
-                    b.Property<int>("MedicoIdMedico");
+                    b.Property<int>("IdMedico");
 
                     b.HasKey("IdAgenda");
 
-                    b.HasIndex("MedicoIdMedico");
+                    b.HasIndex("IdMedico");
 
                     b.ToTable("Agendas");
                 });
@@ -199,15 +199,15 @@ namespace TrabalhoFinal.Migrations
 
                     b.Property<DateTime>("DataHora");
 
-                    b.Property<int?>("MedicoIdMedico");
+                    b.Property<int>("IdMedico");
 
-                    b.Property<int?>("PacienteIdPaciente");
+                    b.Property<int>("IdPaciente");
 
                     b.HasKey("IdConsulta");
 
-                    b.HasIndex("MedicoIdMedico");
+                    b.HasIndex("IdMedico");
 
-                    b.HasIndex("PacienteIdPaciente");
+                    b.HasIndex("IdPaciente");
 
                     b.ToTable("Consultas");
                 });
@@ -304,8 +304,8 @@ namespace TrabalhoFinal.Migrations
             modelBuilder.Entity("TrabalhoFinal.Models.Agenda", b =>
                 {
                     b.HasOne("TrabalhoFinal.Models.Medico", "Medico")
-                        .WithMany("Agendas")
-                        .HasForeignKey("MedicoIdMedico")
+                        .WithMany()
+                        .HasForeignKey("IdMedico")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -313,11 +313,13 @@ namespace TrabalhoFinal.Migrations
                 {
                     b.HasOne("TrabalhoFinal.Models.Medico", "Medico")
                         .WithMany()
-                        .HasForeignKey("MedicoIdMedico");
+                        .HasForeignKey("IdMedico")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TrabalhoFinal.Models.Paciente", "Paciente")
                         .WithMany()
-                        .HasForeignKey("PacienteIdPaciente");
+                        .HasForeignKey("IdPaciente")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TrabalhoFinal.Models.Medico", b =>

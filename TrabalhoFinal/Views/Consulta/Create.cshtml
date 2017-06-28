@@ -12,10 +12,29 @@
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
+            <label asp-for="IdMedico" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="IdMedico" class ="form-control" asp-items="ViewBag.IdMedico"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="IdPaciente" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="IdPaciente" class ="form-control" asp-items="ViewBag.IdPaciente"></select>
+            </div>
+        </div>
+        <div class="form-group">
             <label asp-for="DataHora" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="DataHora" class="form-control" />
                 <span asp-validation-for="DataHora" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="HorarioConsulta" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="HorarioConsulta" class="form-control" />
+                <span asp-validation-for="HorarioConsulta" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">

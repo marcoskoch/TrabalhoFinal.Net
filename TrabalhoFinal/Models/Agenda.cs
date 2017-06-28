@@ -12,15 +12,24 @@ namespace TrabalhoFinal.Models
         public int IdAgenda { get; set; }
 
         [Required]
-        [Display(Name = "Data Início")]
-        public DateTime DataHoraInicio { get; set; }
+        [Display(Name = "Data Agenda")]
+        [DataType(DataType.Date)]
+        public DateTime DataAgenda { get; set; }
 
-        [Required]
-        [Display(Name = "Data Fim")]
-        public DateTime DataHoraFim { get; set; }
+        [DataType(DataType.Time)]
+        [Display(Name = "Horário de entrada")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh\\:mm}")]
+        public TimeSpan HorarioEntrada { get; set; }
+
+        [DataType(DataType.Time)]
+        [Display(Name = "Horário de saiba")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh\\:mm}")]
+        public TimeSpan HorarioSaida { get; set; }
 
         [Required]
         [Display(Name = "Médico")]
+        public int IdMedico { get; set; }
+
         public Medico Medico { get; set; }
 
     }

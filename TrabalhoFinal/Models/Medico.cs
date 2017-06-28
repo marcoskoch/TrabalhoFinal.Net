@@ -22,8 +22,5 @@ namespace TrabalhoFinal.Models
         public int IdEspecialidade { get; set; }
 
         public Especialidade Especialidade { get; set; }
-        
-        [Display(Name = "Agenda")]
-        public ICollection<Agenda> Agendas { get; set; }
     }
 }

@@ -22,7 +22,8 @@ namespace TrabalhoFinal.Controllers
         // GET: Consulta
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Consultas.ToListAsync());
+            var applicationDbContext = _context.Consultas.Include(c => c.Medico).Include(c => c.Paciente);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Consulta/Details/5
@@ -34,6 +35,8 @@ namespace TrabalhoFinal.Controllers
             }
 
             var consulta = await _context.Consultas
+                .Include(c => c.Medico)
+                .Include(c => c.Paciente)
                 .SingleOrDefaultAsync(m => m.IdConsulta == id);
             if (consulta == null)
             {
@@ -46,6 +49,8 @@ namespace TrabalhoFinal.Controllers
         // GET: Consulta/Create
         public IActionResult Create()
         {
+            ViewData["IdMedico"] = new SelectList(_context.Medicos, "IdMedico", "Nome");
+            ViewData["IdPaciente"] = new SelectList(_context.Pacientes, "IdPaciente", "Nome");
             return View();
         }
 
@@ -54,7 +59,7 @@ namespace TrabalhoFinal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdConsulta,DataHora")] Consulta consulta)
+        public async Task<IActionResult> Create([Bind("IdConsulta,IdMedico,IdPaciente,DataHora,HorarioConsulta")] Consulta consulta)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +67,8 @@ namespace TrabalhoFinal.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+            ViewData["IdMedico"] = new SelectList(_context.Medicos, "IdMedico", "Nome", consulta.IdMedico);
+            ViewData["IdPaciente"] = new SelectList(_context.Pacientes, "IdPaciente", "Nome", consulta.IdPaciente);
             return View(consulta);
         }
 
@@ -78,6 +85,8 @@ namespace TrabalhoFinal.Controllers
             {
                 return NotFound();
             }
+            ViewData["IdMedico"] = new SelectList(_context.Medicos, "IdMedico", "Nome", consulta.IdMedico);
+            ViewData["IdPaciente"] = new SelectList(_context.Pacientes, "IdPaciente", "Email", consulta.IdPaciente);
             return View(consulta);
         }
 
@@ -86,7 +95,7 @@ namespace TrabalhoFinal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdConsulta,DataHora")] Consulta consulta)
+        public async Task<IActionResult> Edit(int id, [Bind("IdConsulta,IdMedico,IdPaciente,DataHora,HorarioConsulta")] Consulta consulta)
         {
             if (id != consulta.IdConsulta)
             {
@@ -113,6 +122,8 @@ namespace TrabalhoFinal.Controllers
                 }
                 return RedirectToAction("Index");
             }
+            ViewData["IdMedico"] = new SelectList(_context.Medicos, "IdMedico", "Nome", consulta.IdMedico);
+            ViewData["IdPaciente"] = new SelectList(_context.Pacientes, "IdPaciente", "Email", consulta.IdPaciente);
             return View(consulta);
         }
 
@@ -125,6 +136,8 @@ namespace TrabalhoFinal.Controllers
             }
 
             var consulta = await _context.Consultas
+                .Include(c => c.Medico)
+                .Include(c => c.Paciente)
                 .SingleOrDefaultAsync(m => m.IdConsulta == id);
             if (consulta == null)
             {

@@ -17,12 +17,12 @@ namespace TrabalhoFinal.Models
         public string Nome { get; set; }
 
         [Required]
-        [Display(Name = "Emais")]
+        [Display(Name = "Email")]
         [StringLength(150)]
         public string Email { get; set; }
 
         [Required]
         [Display(Name = "Telefone")]
-        public int Telefone { get; set; }
+        public long Telefone { get; set; }
     }
 }
