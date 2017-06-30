@@ -30,5 +30,8 @@ namespace TrabalhoFinal.Models
         [Display(Name = "Horário da Consulta")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh\\:mm}")]
         public TimeSpan HorarioConsulta { get; set; }
+
+        [Display(Name = "Tempo da Consulta")]
+        public double TempoConsulta { get; set; }
     }
 }

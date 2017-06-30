@@ -206,6 +206,8 @@ namespace TrabalhoFinal.Migrations
 
                     b.Property<int>("IdPaciente");
 
+                    b.Property<double>("TempoConsulta");
+
                     b.HasKey("IdConsulta");
 
                     b.HasIndex("IdMedico");

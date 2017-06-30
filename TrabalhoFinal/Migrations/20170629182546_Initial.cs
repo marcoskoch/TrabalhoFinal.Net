@@ -83,7 +83,7 @@ namespace TrabalhoFinal.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Email = table.Column<string>(maxLength: 150, nullable: false),
                     Nome = table.Column<string>(maxLength: 50, nullable: false),
-                    Telefone = table.Column<int>(nullable: false)
+                    Telefone = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -202,8 +202,9 @@ namespace TrabalhoFinal.Migrations
                 {
                     IdAgenda = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DataHoraFim = table.Column<DateTime>(nullable: false),
-                    DataHoraInicio = table.Column<DateTime>(nullable: false),
+                    DataAgenda = table.Column<DateTime>(nullable: false),
+                    HorarioEntrada = table.Column<TimeSpan>(nullable: false),
+                    HorarioSaida = table.Column<TimeSpan>(nullable: false),
                     IdMedico = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -224,8 +225,10 @@ namespace TrabalhoFinal.Migrations
                     IdConsulta = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     DataHora = table.Column<DateTime>(nullable: false),
+                    HorarioConsulta = table.Column<TimeSpan>(nullable: false),
                     IdMedico = table.Column<int>(nullable: false),
-                    IdPaciente = table.Column<int>(nullable: false)
+                    IdPaciente = table.Column<int>(nullable: false),
+                    TempoConsulta = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {

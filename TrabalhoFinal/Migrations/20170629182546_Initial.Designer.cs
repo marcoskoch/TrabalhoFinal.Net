@@ -8,7 +8,7 @@ using TrabalhoFinal.Data;
 namespace TrabalhoFinal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170628184203_Initial")]
+    [Migration("20170629182546_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -129,9 +129,11 @@ namespace TrabalhoFinal.Migrations
                     b.Property<int>("IdAgenda")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("DataHoraFim");
+                    b.Property<DateTime>("DataAgenda");
 
-                    b.Property<DateTime>("DataHoraInicio");
+                    b.Property<TimeSpan>("HorarioEntrada");
+
+                    b.Property<TimeSpan>("HorarioSaida");
 
                     b.Property<int>("IdMedico");
 
@@ -199,9 +201,13 @@ namespace TrabalhoFinal.Migrations
 
                     b.Property<DateTime>("DataHora");
 
+                    b.Property<TimeSpan>("HorarioConsulta");
+
                     b.Property<int>("IdMedico");
 
                     b.Property<int>("IdPaciente");
+
+                    b.Property<double>("TempoConsulta");
 
                     b.HasKey("IdConsulta");
 
@@ -257,7 +263,7 @@ namespace TrabalhoFinal.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<int>("Telefone");
+                    b.Property<long>("Telefone");
 
                     b.HasKey("IdPaciente");
 
