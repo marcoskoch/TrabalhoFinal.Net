@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TrabalhoFinal.Data;
 using TrabalhoFinal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TrabalhoFinal.Controllers
 {
@@ -16,16 +17,31 @@ namespace TrabalhoFinal.Controllers
 
         public AgendaController(ApplicationDbContext context)
         {
-            _context = context;    
+            _context = context;
         }
 
         // GET: Agenda
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Agendas.Include(a => a.Medico);
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [Authorize]
+        public async Task<IActionResult> AgendaMedico(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var applicationDbContext = _context.Agendas.Where(a => a.IdMedico == id).Include(a => a.Medico).OrderBy(a => a.DataAgenda);
+
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        [Authorize]
         // GET: Agenda/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -46,6 +62,7 @@ namespace TrabalhoFinal.Controllers
         }
 
         // GET: Agenda/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["IdMedico"] = new SelectList(_context.Medicos, "IdMedico", "Nome");
@@ -56,6 +73,7 @@ namespace TrabalhoFinal.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdAgenda,DataAgenda,HorarioEntrada,HorarioSaida,IdMedico")] Agenda agenda)
         {
@@ -70,6 +88,7 @@ namespace TrabalhoFinal.Controllers
         }
 
         // GET: Agenda/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -90,6 +109,7 @@ namespace TrabalhoFinal.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdAgenda,DataAgenda,HorarioEntrada,HorarioSaida,IdMedico")] Agenda agenda)
         {
@@ -123,6 +143,7 @@ namespace TrabalhoFinal.Controllers
         }
 
         // GET: Agenda/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -142,6 +163,7 @@ namespace TrabalhoFinal.Controllers
         }
 
         // POST: Agenda/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

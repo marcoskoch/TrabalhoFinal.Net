@@ -39,7 +39,8 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdPaciente">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.IdPaciente">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdPaciente">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.IdPaciente">Delete</a> |
+                <a asp-controller="Consulta" asp-action="ConsultaPaciente" asp-route-id="@item.IdPaciente">Consultar Agendamentos</a>
             </td>
         </tr>
 }

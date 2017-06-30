@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TrabalhoFinal.Data;
 using TrabalhoFinal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TrabalhoFinal.Controllers
 {
@@ -20,12 +21,14 @@ namespace TrabalhoFinal.Controllers
         }
 
         // GET: Especialidade
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Especialidades.ToListAsync());
         }
 
         // GET: Especialidade/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +47,7 @@ namespace TrabalhoFinal.Controllers
         }
 
         // GET: Especialidade/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -53,6 +57,7 @@ namespace TrabalhoFinal.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdEspecialidade,Nome")] Especialidade especialidade)
         {
@@ -66,6 +71,7 @@ namespace TrabalhoFinal.Controllers
         }
 
         // GET: Especialidade/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,6 +91,7 @@ namespace TrabalhoFinal.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdEspecialidade,Nome")] Especialidade especialidade)
         {
@@ -117,6 +124,7 @@ namespace TrabalhoFinal.Controllers
         }
 
         // GET: Especialidade/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,6 +143,7 @@ namespace TrabalhoFinal.Controllers
         }
 
         // POST: Especialidade/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

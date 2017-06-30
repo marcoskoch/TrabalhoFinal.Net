@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TrabalhoFinal.Data;
 using TrabalhoFinal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TrabalhoFinal.Controllers
 {
@@ -20,6 +21,7 @@ namespace TrabalhoFinal.Controllers
         }
 
         // GET: Medico
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Medicos.Include(m => m.Especialidade);
@@ -27,6 +29,7 @@ namespace TrabalhoFinal.Controllers
         }
 
         // GET: Medico/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,6 +49,7 @@ namespace TrabalhoFinal.Controllers
         }
 
         // GET: Medico/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["IdEspecialidade"] = new SelectList(_context.Especialidades, "IdEspecialidade", "Nome");
@@ -55,6 +59,7 @@ namespace TrabalhoFinal.Controllers
         // POST: Medico/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdMedico,Nome,IdEspecialidade")] Medico medico)
@@ -70,6 +75,7 @@ namespace TrabalhoFinal.Controllers
         }
 
         // GET: Medico/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -90,6 +96,7 @@ namespace TrabalhoFinal.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdMedico,Nome,IdEspecialidade")] Medico medico)
         {
@@ -123,6 +130,7 @@ namespace TrabalhoFinal.Controllers
         }
 
         // GET: Medico/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -142,6 +150,7 @@ namespace TrabalhoFinal.Controllers
         }
 
         // POST: Medico/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

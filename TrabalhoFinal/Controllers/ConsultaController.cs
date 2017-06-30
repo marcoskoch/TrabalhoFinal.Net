@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TrabalhoFinal.Data;
 using TrabalhoFinal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TrabalhoFinal.Controllers
 {
@@ -24,13 +25,28 @@ namespace TrabalhoFinal.Controllers
         }
 
         // GET: Consulta
+        [Authorize]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Consultas.Include(c => c.Medico).Include(c => c.Paciente).OrderBy(c => c.DataHora);
+            var applicationDbContext = _context.Consultas.Include(c => c.Medico).Include(c => c.Paciente).OrderBy(c => c.DataHora).ThenBy(c => c.HorarioConsulta);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        [Authorize]
+        public async Task<IActionResult> ConsultaPaciente(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var applicationDbContext = _context.Consultas.Where(c => c.IdPaciente == id).Include(c => c.Medico).Include(c => c.Paciente).OrderBy(c => c.DataHora).ThenBy(c => c.HorarioConsulta);
+
             return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Consulta/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -51,6 +67,7 @@ namespace TrabalhoFinal.Controllers
         }
 
         // GET: Consulta/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["IdMedico"] = new SelectList(_context.Medicos, "IdMedico", "Nome");
@@ -63,6 +80,7 @@ namespace TrabalhoFinal.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdConsulta,IdMedico,IdPaciente,DataHora,HorarioConsulta,TempoConsulta")] Consulta consulta)
         {
@@ -113,6 +131,7 @@ namespace TrabalhoFinal.Controllers
         }
 
         // GET: Consulta/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -135,6 +154,7 @@ namespace TrabalhoFinal.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdConsulta,IdMedico,IdPaciente,DataHora,HorarioConsulta,TempoConsulta")] Consulta consulta)
         {
@@ -204,6 +224,7 @@ namespace TrabalhoFinal.Controllers
         }
 
         // GET: Consulta/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -226,6 +247,7 @@ namespace TrabalhoFinal.Controllers
         // POST: Consulta/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var consulta = await _context.Consultas.SingleOrDefaultAsync(m => m.IdConsulta == id);
@@ -242,7 +264,7 @@ namespace TrabalhoFinal.Controllers
         private bool VerificarAgendaDisponivel(Consulta consulta)
         {
             var agendaMedico = _context.Agendas.SingleOrDefault(a => a.IdMedico == consulta.IdMedico && a.DataAgenda == consulta.DataHora);
-
+            
             if (agendaMedico == null)
             {
                 return false;
@@ -252,6 +274,26 @@ namespace TrabalhoFinal.Controllers
             {
                 return false;
             }
+
+            var consultasMedicoDia = _context.Consultas.Where(c => c.IdMedico == consulta.IdMedico && c.DataHora == consulta.DataHora);
+
+            var horaInicioConsulta = consulta.HorarioConsulta;
+            var horaFimConsulta = consulta.HorarioConsulta + TimeSpan.FromMinutes(consulta.TempoConsulta);
+
+            foreach (var item in consultasMedicoDia)
+            {
+                var horaInicio = item.HorarioConsulta;
+                var horaFim = item.HorarioConsulta + TimeSpan.FromMinutes(item.TempoConsulta);
+
+                if ((horaInicioConsulta < horaFim && horaInicioConsulta > horaInicio) || (horaFimConsulta < horaFim && horaFimConsulta > horaInicio))
+                {
+                    return false;
+                }
+            }
+
+            int e = 0;
+
+            e = 3 + 4;
 
             return true;
         }
