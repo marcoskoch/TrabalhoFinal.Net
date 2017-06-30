@@ -4,11 +4,10 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h1 class="display-4">Cadastrar Paciente</h1>
 
 <form asp-action="Create">
     <div class="form-horizontal">
-        <h4>Paciente</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
@@ -34,14 +33,14 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Cadastrar" class="btn btn-primary" />
             </div>
         </div>
     </div>
 </form>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar para a lista</a>
 </div>
 
 @section Scripts {

@@ -48,3 +48,17 @@ textarea {
         display: none;
     }
 }
+
+.navBlue {
+    background-color: #00264d;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: #FFFFFF;
+}
+.navbar-inverse .navbar-brand {
+    color: #FFFFFF;
+}
+
+.navbar-inverse .btn-link {
+    color: #FFFFFF;
+}
